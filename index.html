@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your IP</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f5f5f5;
+    }
+    #ip-section {
+        text-align: center;
+        margin-top: 50px;
+    }
+    #ip-section label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #333;
+    }
+    #ip-address {
+        font-family: monospace;
+        margin-bottom: 20px;
+        font-size: 20px;
+        color: transparent;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+    #button-container {
+        margin-top: 10px;
+    }
+    #reveal-ip-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    #reveal-ip-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div id="ip-section">
+    <span id="ip-address">Loading...</span>
+    <div id="button-container">
+        <button id="reveal-ip-btn">Reveal IP</button>
+    </div>
+</div>
+
+<script>
+    function revealIP() {
+        document.getElementById("ip-address").style.color = "black"; 
+        document.getElementById("ip-address").style.textShadow = "none";
+    }
+
+    document.getElementById("reveal-ip-btn").addEventListener("click", function() {
+        revealIP();
+    });
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            document.getElementById("ip-address").innerText = response.ip;
+        }
+    };
+    xhttp.open("GET", "https://api.ipify.org?format=json", true);
+    xhttp.send();
+</script>
+</body>
+</html>
